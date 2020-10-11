@@ -2,6 +2,8 @@ package guru.springframework.sfgpetclinic.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "pets")
@@ -20,6 +22,11 @@ public class Pet extends BaseEntity{
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private Owner owner;
+
+    /*Why specify mapped by : https://stackoverflow.com/questions/24584411/what-if-we-do-not-specify-mappedby-attribute-in-onetomany-annotation
+    * https://www.baeldung.com/jpa-joincolumn-vs-mappedby*/
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pet")
+    private Set<Visit> visits = new HashSet<>();
 
     public String getName() {
         return name;
@@ -51,5 +58,13 @@ public class Pet extends BaseEntity{
 
     public void setOwner(Owner owner) {
         this.owner = owner;
+    }
+
+    public Set<Visit> getVisits() {
+        return visits;
+    }
+
+    public void setVisits(Set<Visit> visits) {
+        this.visits = visits;
     }
 }
