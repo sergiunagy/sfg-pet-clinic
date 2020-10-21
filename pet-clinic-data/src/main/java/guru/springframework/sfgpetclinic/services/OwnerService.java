@@ -6,4 +6,6 @@ public interface OwnerService extends CrudService<Owner, Long>{
 
     Owner findByLastName(String lastName);
 
+    @Override
+    Owner findById(Long aLong);
 }
