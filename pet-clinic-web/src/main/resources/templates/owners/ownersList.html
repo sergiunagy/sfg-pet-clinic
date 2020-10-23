@@ -20,7 +20,7 @@
     <tbody>
     <!--/*@thymesVar id="owner" type="guru.springframework.sfgpetclinic.model.Owner"*/-->
     <!--/*@thymesVar id="owners" type="java.util.List<springframework.sfgpetclinic.model.Owner>"*/-->
-    <tr th:each="owner : ${owners}">
+    <tr th:each="owner : ${selections}">
         <td>
             <a th:href="@{/owners/__${owner.id}__}" th:text="${owner.firstName + ' ' + owner.lastName}"/></a>
         </td>

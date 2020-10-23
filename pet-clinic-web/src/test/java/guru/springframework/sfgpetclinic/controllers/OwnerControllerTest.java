@@ -68,9 +68,9 @@ class OwnerControllerTest {
         when(ownerService.findAllByLastNameLike(anyString())).thenReturn(new ArrayList<Owner>(retOwners));
 
         mockMvc.perform(get("/owners"))
-                .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/owners/ownersList"))
-                .andExpect(model().attribute("owners", hasSize(2)));
+                .andExpect(status().isOk())
+                .andExpect(view().name("owners/ownersList"))
+                .andExpect(model().attribute("selections", hasSize(2)));
     }
 
     @Test

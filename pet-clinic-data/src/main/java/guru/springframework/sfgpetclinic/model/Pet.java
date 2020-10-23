@@ -7,11 +7,11 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@EqualsAndHashCode(exclude={"owner"})
 @Entity
 @Table(name = "pets")
 public class Pet extends BaseEntity{

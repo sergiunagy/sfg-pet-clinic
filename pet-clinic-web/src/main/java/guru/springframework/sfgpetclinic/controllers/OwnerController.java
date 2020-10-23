@@ -23,13 +23,6 @@ public class OwnerController {
     }
 
 
-//    @RequestMapping({"", "/", "/index", "/index.html"})
-//    public String index(Model model){
-//
-//        model.addAttribute("owners", ownerService.findAll());
-//        return "owners/index";
-//    }
-
     @RequestMapping({"/find"})
     public String ownersFind(Model model){
 
@@ -37,7 +30,7 @@ public class OwnerController {
         return "owners/findOwners";
     }
 
-    @GetMapping({"/", ""})
+    @GetMapping
     public String processFindForm(Owner owner, BindingResult result, Model model){
 
         // allow parameterless GET -- will return all records
@@ -45,7 +38,7 @@ public class OwnerController {
             owner.setLastName("");
         }
 
-        List<Owner> results = ownerService.findAllByLastNameLike(owner.getLastName());
+        List<Owner> results = ownerService.findAllByLastNameLike("%"+owner.getLastName()+"%");
 
         if(results.isEmpty()){
             result.rejectValue("lastName", "notFound", "not found");
@@ -54,8 +47,8 @@ public class OwnerController {
             owner = results.iterator().next();
             return "redirect:/owners/" + owner.getId();
         } else{
-            model.addAttribute("owners", results);
-            return "redirect:/owners/ownersList";
+            model.addAttribute("selections", results);
+            return "owners/ownersList";
         }
     }
 
