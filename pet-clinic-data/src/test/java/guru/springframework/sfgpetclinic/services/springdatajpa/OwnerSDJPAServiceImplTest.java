@@ -11,9 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -114,5 +112,22 @@ class OwnerSDJPAServiceImplTest {
         ownerSDJPAService.deleteById(retOwner.getId());
 
         verify(ownerRepository).deleteById(retOwner.getId());
+    }
+
+    @Test
+    void findAllByLastNameLike() {
+        //given
+        List<Owner> owners = new ArrayList<>();
+        owners.add(Owner.builder().id(1L).lastName("first").build());
+        owners.add(Owner.builder().id(2L).lastName("first").build());
+
+        // when
+        when(ownerRepository.findAllByLastNameLike(anyString())).thenReturn(owners);
+
+        List<Owner> found = ownerSDJPAService.findAllByLastNameLike("%%");
+
+        assertNotNull(found);
+        assertFalse(found.isEmpty());
+        assertEquals(2,found.size());
     }
 }
