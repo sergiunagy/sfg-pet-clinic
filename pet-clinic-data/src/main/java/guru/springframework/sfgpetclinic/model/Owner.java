@@ -22,19 +22,37 @@ public class Owner extends Person {
         this.address = address;
         this.city = city;
         this.telephone = telephone;
-        this.pets = pets;
+        if (pets != null) {
+            this.pets = pets;
+        }
     }
 
-    @Column(name="address")
+    @Column(name = "address")
     private String address;
 
-    @Column(name="city")
+    @Column(name = "city")
     private String city;
 
-    @Column(name="telephone")
+    @Column(name = "telephone")
     private String telephone;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
     private Set<Pet> pets = new HashSet<>();
 
+    public Pet getPet(String petName) {
+
+        return getPet(petName, false);
+    }
+
+    public Pet getPet(String name, boolean ignoreNew) {
+
+        for (Pet pet : pets) {
+            if (!ignoreNew || pet.isNew()) {
+                if (pet.getName().equalsIgnoreCase(name)) {
+                    return pet;
+                }
+            }
+        }
+        return null;
+    }
 }
