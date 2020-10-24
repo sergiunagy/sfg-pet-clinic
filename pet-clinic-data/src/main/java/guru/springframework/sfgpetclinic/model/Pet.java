@@ -13,12 +13,12 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "pets")
-public class Pet extends BaseEntity{
+public class Pet extends BaseEntity {
 
-    @Column(name="name")
+    @Column(name = "name")
     private String name;
 
-    @Column(name="birth_date")
+    @Column(name = "birth_date")
     private LocalDate birthDate;
 
     @ManyToOne
@@ -30,7 +30,7 @@ public class Pet extends BaseEntity{
     private Owner owner;
 
     /*Why specify mapped by : https://stackoverflow.com/questions/24584411/what-if-we-do-not-specify-mappedby-attribute-in-onetomany-annotation
-    * https://www.baeldung.com/jpa-joincolumn-vs-mappedby*/
+     * https://www.baeldung.com/jpa-joincolumn-vs-mappedby*/
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pet")
     private Set<Visit> visits = new HashSet<>();
 
@@ -41,7 +41,9 @@ public class Pet extends BaseEntity{
         this.birthDate = birthDate;
         this.petType = petType;
         this.owner = owner;
-        this.visits = visits;
+        if (visits != null || visits.size() > 0) {
+            this.visits = visits;
+        }
     }
 
     public Pet() {
