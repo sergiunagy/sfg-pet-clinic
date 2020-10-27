@@ -11,14 +11,24 @@
 <table id="vets" class="table table-striped">
     <thead>
     <th>Id</th>
-    <th>First name</th>
-    <th>Last name</th>
+    <th>Name</th>
+    <th>Specialties</th>
     </thead>
     <tbody>
+<!--    <tr th:each="vet : ${vets}">-->
+<!--        <td th:text="${vet.id}">1</td>-->
+<!--        <td th:text="${vet.firstName}">Joe</td>-->
+<!--        <td th:text="${vet.lastName}">Buck</td>-->
+<!--    </tr>-->
     <tr th:each="vet : ${vets}">
         <td th:text="${vet.id}">1</td>
-        <td th:text="${vet.firstName}">Joe</td>
-        <td th:text="${vet.lastName}">Buck</td>
+        <td th:text="${vet.firstName + ' ' + vet.lastName}"></td>
+        <td>
+            <span th:each="specialty: ${vet.specialties}"
+                  th:text="${specialty.description + ' '}"/>
+            <span th:if="${vet?.getSpecialties().size() == 0}"> none</span>
+        </td>
+
     </tr>
     </tbody>
 </table>
